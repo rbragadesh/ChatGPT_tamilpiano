@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+models/
+uploads/
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.ogg
+.env
+.env.*
+test_*.py
+README.md

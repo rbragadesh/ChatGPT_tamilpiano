@@ -1,0 +1,22 @@
+name: Check audio transcription service
+on:
+  push:
+    paths: ['service/**', '.github/workflows/service-check.yml']
+  pull_request:
+    paths: ['service/**', '.github/workflows/service-check.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: 'service/requirements*.txt'
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: python -m pip install -r service/requirements-test.txt
+      - run: python service/engine.py --download-model
+      - run: python -m pytest service -q

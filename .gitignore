@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+test-results/
+.venv/
+__pycache__/
+.pytest_cache/
+service/models/
+service/.jobs/
+public/onnx/
+public/licenses/

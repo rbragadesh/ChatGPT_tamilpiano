@@ -1,0 +1,68 @@
+export type LessonCategory = 'foundations' | 'melody' | 'chords' | 'rhythm';
+/** Notes are semitone offsets from C4/Sa; an empty array is a timed rest. */
+export interface LessonStep { notes: number[]; beats: number; fingering?: string }
+export interface Lesson {
+  id: string; title: string; subtitle: string; description: string;
+  category: LessonCategory; level: 'Beginner' | 'Developing'; duration: string;
+  bpm: number; meter: number; steps: LessonStep[]; tips: string[];
+  source?: 'manual' | 'transcription';
+}
+const single = (notes: number[], beats = 1): LessonStep[] => notes.map(note => ({ notes: [note], beats }));
+export const lessons: Lesson[] = [
+  { id: 'first-notes', title: 'Your first five notes', subtitle: 'A little melody. A lovely beginning.', category: 'foundations', level: 'Beginner', duration: '3 min', bpm: 76, meter: 4,
+    description: 'Find Sa, then let five neighbouring notes become a melody. This original exercise starts with the shape of a major scale.',
+    steps: single([0, 2, 4, 5, 7, 5, 4, 2, 0], 1),
+    tips: ['Set your thumb on Sa (the chosen tonic). Use fingers 1–2–3–4–5 for the ascending five notes.', 'Play one note for each beat. Relax your wrist and listen for an even sound.', 'With Sa = C, these notes are C D E F G, or S R₂ G₃ M₁ P.'] },
+  { id: 'sa-ri-ga', title: 'Sa, Ri, Ga', subtitle: 'Meet your musical alphabet', category: 'foundations', level: 'Beginner', duration: '3 min', bpm: 72, meter: 4,
+    description: 'Switch between Western names and Carnatic swaras while keeping the same pitches. Sa moves when you change your tonic.',
+    steps: single([0, 2, 4, 2, 0, 4, 5, 7, 5, 4, 2, 0]),
+    tips: ['Western note names identify fixed pitches; swaras describe a pitch relative to your Sa.', 'This exercise uses R₂ and G₃. Other ragas can use different Ri and Ga positions.', 'The keyboard uses equal temperament. Raga intonation and gamakas need additional listening and a teacher.'] },
+  { id: 'major-journey', title: 'The major journey', subtitle: 'An octave of possibility', category: 'melody', level: 'Beginner', duration: '4 min', bpm: 80, meter: 4,
+    description: 'Travel up and down a major scale, then make a small original phrase. Its swara positions match the notes of Shankarabharanam.',
+    steps: single([0, 2, 4, 5, 7, 9, 11, 12, 11, 9, 7, 5, 4, 2, 0], 1),
+    tips: ['Try the ascending right-hand fingering 1–2–3–1–2–3–4–5.', 'Cross your thumb under after Ga (the third note). Keep your movement small.', 'A shared scale does not make every melody a raga performance. Here we practise pitch positions.'] },
+  { id: 'minor-mood', title: 'A softer shade', subtitle: 'Discover the natural minor sound', category: 'melody', level: 'Beginner', duration: '4 min', bpm: 68, meter: 4,
+    description: 'Hear how a lowered third, sixth and seventh change the colour of a melody in this original natural-minor study.',
+    steps: single([0, 2, 3, 7, 5, 3, 2, 0, 7, 8, 10, 8, 7, 3, 2, 0]),
+    tips: ['With Sa = C, the scale is C D E♭ F G A♭ B♭ C.', 'The corresponding swara positions are S R₂ G₂ M₁ P D₁ N₂ S.', 'Listen once, then practise slowly. Let every note finish before moving on.'] },
+  { id: 'five-note-bloom', title: 'Five-note bloom', subtitle: 'Explore a bright pentatonic palette', category: 'melody', level: 'Beginner', duration: '4 min', bpm: 84, meter: 4,
+    description: 'An original pentatonic melody using S R₂ G₃ P D₂. These are the pitch positions found in Mohanam.',
+    steps: single([0, 2, 4, 7, 9, 7, 4, 2, 4, 7, 9, 12, 9, 7, 4, 0]),
+    tips: ['There is no Ma or Ni in this five-note palette.', 'Notice the wider gap from Ga to Pa. Move the whole hand rather than stretching.', 'Practise these clean pitches before exploring the ornamentation of a raga.'] },
+  { id: 'first-chord', title: 'Your first chord', subtitle: 'Three notes, one warm sound', category: 'chords', level: 'Beginner', duration: '4 min', bpm: 64, meter: 4,
+    description: 'Build a major triad from Sa, Ga₃ and Pa. Play each highlighted group together on the touchscreen or computer keyboard.',
+    steps: [{notes:[0],beats:1},{notes:[4],beats:1},{notes:[7],beats:2},{notes:[0,4,7],beats:4},{notes:[0,4,7],beats:4}],
+    tips: ['A major triad contains root, major third and perfect fifth: intervals 0, 4 and 7 semitones.', 'Use right-hand fingers 1–3–5. Press the three chord notes within half a second.', 'Chord names stay Western because “major” and “minor” describe harmony; swaras name the individual notes.'] },
+  { id: 'chord-changes', title: 'Chords that carry a song', subtitle: 'Find your I–IV–V–I', category: 'chords', level: 'Developing', duration: '5 min', bpm: 64, meter: 4,
+    description: 'A simple original chord sequence: tonic, subdominant, dominant, tonic. Use comfortable inversions to keep the hand nearby.',
+    steps: [{notes:[0,4,7],beats:4},{notes:[0,5,9],beats:4},{notes:[2,7,11],beats:4},{notes:[0,4,7],beats:4},{notes:[0,5,9],beats:4},{notes:[2,7,11],beats:4},{notes:[0,4,7],beats:4}],
+    tips: ['At Sa = C, the sequence is C major, F major, G major, C major.', 'The F and G chords use inversions: the lowest sounding note need not be the root.', 'Pause between changes first. Add the metronome when your fingers know the shapes.'] },
+  { id: 'waltz-time', title: 'A melody in three', subtitle: 'ONE, two, three', category: 'rhythm', level: 'Beginner', duration: '3 min', bpm: 84, meter: 3,
+    description: 'Feel a gentle three-beat pulse in this original waltz study. Hold the long notes through all their beats.',
+    steps: [{notes:[0],beats:1},{notes:[4],beats:1},{notes:[7],beats:1},{notes:[9],beats:3},{notes:[7],beats:1},{notes:[5],beats:1},{notes:[4],beats:1},{notes:[2],beats:3},{notes:[0],beats:3}],
+    tips: ['Count “ONE, two, three” with the metronome; its first beat is accented.', 'Listen mode demonstrates the written note lengths. Guided practice checks pitches at your own pace.', 'A filled note with a stem lasts one beat; an open note with a stem lasts two.'] },
+  { id: 'steady-eighths', title: 'Between the beats', subtitle: 'Make room for the “and”', category: 'rhythm', level: 'Developing', duration: '4 min', bpm: 64, meter: 4,
+    description: 'Play two notes per beat and count “1 and 2 and”. This original exercise alternates eighth notes and longer landing notes.',
+    steps: [...single([0,2,4,5,7,5,4,2],0.5),{notes:[0],beats:2},...single([4,5,7,9,7,5,4,2],0.5),{notes:[0],beats:2}],
+    tips: ['Keep counting at the same speed when the notes get faster.', 'Eighth notes last half a beat. In the staff, look for the small flag on the stem.', 'Guided practice scores pitch accuracy; use Listen with the metronome to work on timing.'] },
+  { id: 'call-response', title: 'A musical conversation', subtitle: 'Listen, answer, repeat', category: 'melody', level: 'Beginner', duration: '4 min', bpm: 76, meter: 4,
+    description: 'Hear a short question rise, then a reply settle back to Sa. This original phrase teaches melodic direction.',
+    steps: single([0,2,4,7,4,2,0,0,4,5,7,9,7,4,2,0]),
+    tips: ['Sing or hum the phrase before playing it.', 'The first phrase rises to Pa; the answer returns to Sa.', 'Try to hear the next note before touching the key.'] },
+  { id: 'left-hand-roots', title: 'Give your melody roots', subtitle: 'A grounded left hand', category: 'chords', level: 'Beginner', duration: '3 min', bpm: 64, meter: 4,
+    description: 'Practise the root movement behind a I–vi–IV–V progression. This first step uses single notes before adding full chords.',
+    steps: single([0,9,5,7,0,9,5,7,0],4),
+    tips: ['Use your left hand and notice how each bass note changes the feeling of the harmony.', 'With Sa = C, the roots are C, A, F and G.', 'These notes prepare chord movement; a single root alone does not establish major or minor quality.'] },
+  { id: 'melody-and-harmony', title: 'Melody meets harmony', subtitle: 'A little more colour', category: 'chords', level: 'Developing', duration: '5 min', bpm: 60, meter: 4,
+    description: 'Alternate a single melody note with a supporting chord. This original study introduces the difference between a tune and its harmony.',
+    steps: [{notes:[4],beats:1},{notes:[7],beats:1},{notes:[0,4,7],beats:2},{notes:[9],beats:1},{notes:[7],beats:1},{notes:[0,5,9],beats:2},{notes:[11],beats:1},{notes:[7],beats:1},{notes:[2,7,11],beats:2},{notes:[0,4,7],beats:4}],
+    tips: ['Play single notes lightly and let chords sound balanced.', 'The melody is the line you can sing; harmony is the group of notes supporting it.', 'Start with one hand. Two-hand independence comes gradually with regular slow practice.'] },
+  { id: 'staff-reading', title: 'Read a little music', subtitle: 'Follow the notes on the staff', category: 'foundations', level: 'Beginner', duration: '4 min', bpm: 72, meter: 4,
+    description: 'Watch notes move up and down the treble staff. At Sa = C, middle C sits on the small ledger line below the staff.',
+    steps: single([0,4,7,4,2,5,9,5,4,7,11,7,12,7,4,0]),
+    tips: ['Treble-clef lines, from bottom to top, are E G B D F. The spaces are F A C E.', 'Higher notes appear higher on the staff. A ledger line extends the staff for notes such as middle C.', 'The staff uses fixed Western pitches even while the labels show movable swaras.'] },
+  { id: 'syncopation', title: 'A playful offbeat', subtitle: 'Feel the spaces in the groove', category: 'rhythm', level: 'Developing', duration: '5 min', bpm: 72, meter: 4,
+    description: 'Long and short notes shift the emphasis in this original rhythm study. Listen and count before trying the phrase.',
+    steps: [{notes:[0],beats:1.5},{notes:[4],beats:0.5},{notes:[7],beats:1.5},{notes:[4],beats:0.5},{notes:[5],beats:1.5},{notes:[9],beats:0.5},{notes:[7],beats:2},{notes:[4],beats:0.5},{notes:[2],beats:0.5},{notes:[0],beats:3}],
+    tips: ['Count “1 and 2 and 3 and 4 and” through the whole phrase.', 'A dotted quarter note lasts one and a half beats.', 'Keep the beat steady; the notes can begin between beats. Guided scoring checks pitch, not rhythm.'] },
+];
