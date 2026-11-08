@@ -1,0 +1,52 @@
+[
+  {
+    "name": "lucide-react",
+    "version": "0.468.0",
+    "license": "ISC",
+    "files": [
+      "lucide-react@0.468.0/LICENSE"
+    ]
+  },
+  {
+    "name": "onnxruntime-common",
+    "version": "1.31.1",
+    "license": "MIT",
+    "files": [
+      "onnxruntime-common@1.31.1/LICENSE",
+      "onnxruntime-common@1.31.1/ThirdPartyNotices.txt"
+    ]
+  },
+  {
+    "name": "onnxruntime-web",
+    "version": "1.31.1",
+    "license": "MIT",
+    "files": [
+      "onnxruntime-web@1.31.1/LICENSE",
+      "onnxruntime-web@1.31.1/ThirdPartyNotices.txt"
+    ]
+  },
+  {
+    "name": "react",
+    "version": "19.3.1",
+    "license": "MIT",
+    "files": [
+      "react@19.3.1/LICENSE"
+    ]
+  },
+  {
+    "name": "react-dom",
+    "version": "19.3.1",
+    "license": "MIT",
+    "files": [
+      "react-dom@19.3.1/LICENSE"
+    ]
+  },
+  {
+    "name": "scheduler",
+    "version": "0.28.0",
+    "license": "MIT",
+    "files": [
+      "scheduler@0.28.0/LICENSE"
+    ]
+  }
+]

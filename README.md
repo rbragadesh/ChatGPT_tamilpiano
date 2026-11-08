@@ -59,12 +59,22 @@ Western/Carnatic conversion is an equal-tempered keyboard aid. It does not deter
 
 ## Publish on GitHub Pages
 
-1. Commit the project, including `public/models/`, and push to the repository's `main` branch. Generated `public/onnx/`, `public/licenses/`, `node_modules/`, and `dist/` are not source files to commit.
-2. In **GitHub → Settings → Pages → Build and deployment**, select **GitHub Actions**.
-3. The included **Deploy Isai to GitHub Pages** workflow installs the locked npm dependencies, verifies the model, runs tests, builds the complete static app, and deploys `dist`.
-4. Use the HTTPS address from the successful deployment. Preparing these files alone does not publish a site.
+Both GitHub Pages publishing modes are supported. The current repository uses **Deploy from a branch → main → / (root)**. In that mode, GitHub serves repository files without running Vite. The source entry redirects to the checked-in compiled `site/` folder; the generated app itself does not redirect.
 
-There is no transcription service address to configure. GitHub Pages serves the application, worker, model, runtime, and notices. For a private repository, Pages availability depends on the GitHub plan.
+Before publishing source changes in branch mode:
+
+```sh
+npm ci
+npm run build:pages
+```
+
+Commit the updated `site/` output together with the source changes, then push `main`. The root `.nojekyll` preserves the static output. Do not hand-edit generated files in `site/`; `scripts/prepare-pages-branch.mjs` only replaces a directory carrying its own generated-build marker. The publication includes the worker, model, WASM, manifest, icons, offline cache, and full notices. The original site URL redirects to the working app under `site/`, where the iPhone Home Screen manifest and service worker have the correct scope.
+
+Alternatively, select **GitHub Actions** in Settings → Pages. The included workflow runs the tests and `npm run build`, then deploys `dist` directly. It reads the selected Pages mode and skips custom artifact deployment when GitHub's built-in branch publisher is active.
+
+Generated `public/onnx/`, `public/licenses/`, `node_modules/`, and `dist/` remain ignored development/build outputs. The deliberate exception is the checked-in `site/` publication used by branch mode. No Python backend, transcription service address, account, or API key is required. GitHub Pages serves the application and all inference assets. For a private repository, availability depends on the GitHub plan.
+
+`python3 tests/browser-branch-pages.py` reproduces a branch-published repository under `/ChatGPT_tamilpiano/`, verifies its redirect and rendered UI, then performs real local model inference while fully offline. It needs a current `npm run build:pages` plus the development image's Playwright/Chromium, but no running Vite server.
 
 ## Install on iPhone
 

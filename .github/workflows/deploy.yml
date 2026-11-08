@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  pages: read
 
 concurrency:
   group: github-pages
@@ -15,6 +16,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      pages_mode: ${{ steps.pages-mode.outputs.mode }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -25,12 +28,20 @@ jobs:
       - run: npm test
       - run: npm run build
       - uses: actions/configure-pages@v5
+      - name: Read Pages publishing mode
+        id: pages-mode
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          pages_mode="$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq .build_type)"
+          echo "mode=$pages_mode" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
     needs: build
+    if: needs.build.outputs.pages_mode == 'workflow'
     runs-on: ubuntu-latest
     permissions:
       pages: write
